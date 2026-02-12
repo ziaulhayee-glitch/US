@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        :root {
+            --primary-pink: #ff4d6d;
+            --soft-pink: #fff0f3;
+            --hot-red: #c9184a;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: var(--soft-pink);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Floating Kisses Animation */
+        .kiss {
+            position: absolute;
+            font-size: 2rem;
+            animation: float 6s linear infinite;
+            z-index: 0;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        .container {
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 350px;
+        }
+
+        .main-img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            border: 4px solid var(--primary-pink);
+        }
+
+        h1 {
+            color: var(--hot-red);
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+            height: 50px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
+
+        #yesBtn {
+            background-color: var(--primary-pink);
+            color: white;
+        }
+
+        #noBtn {
+            background-color: #999;
+            color: white;
+            position: absolute; /* Needed for moving */
+            left: 180px; /* Default desktop position */
+            transition: 0.1s ease-out;
+            white-space: nowrap;
+            touch-action: none; /* Prevents scrolling while trying to tap */
+        }
+
+        /* Success Screen */
+        #success-screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.5s;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .gallery img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 3px solid var(--primary-pink);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 600px) {
+            #noBtn {
+                left: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="kiss-container"></div>
+
+    <div class="container" id="main-card">
+        <img src="https://thumbs.dreamstime.com/b/heartwarming-illustration-featuring-two-fluffy-teddy-bears-hugging-each-other-gentle-smile-accompanied-floating-hearts-385610022.jpg" alt="Cute" class="main-img">
+        
+        <h1>Will you be my Valentine? 💋
+        Meri Jawwwnnnnn💌
+        Meri Zindagiii 🌎
+        Meraa Bachawwww🐥
+        Meraw Shonawwww🍫
+        Show your love tap YES 💘
+        </h1>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="showLove()">Yes</button>
+            <button id="noBtn" onmouseover="moveNo()" onclick="moveNo()" ontouchstart="moveNo()">No</button>
+        </div>
+    </div>
+
+    <div id="success-screen">
+        <h1 style="font-size: 2.5rem;">Would you like to be held by your jawwn in his ARM ❤️</h1>
+        <h1>Meri Jawwwnnnnn💌
+            <br>
+            Meri Zindagiii 🌎<br>
+            Meraa Bachawwww🐥<br>
+            Meraw Shonawwww🍫<br>
+            Begaummm <br>
+            My Love Dear Tashfa Atif<br>
+
+                Best Regards,
+                Zia
+        </h1>
+        <div class="gallery">
+            <img src="https://thumbs.dreamstime.com/b/teddy-bears-kissing-16054665.jpg" alt="Love 1">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH1L_LK6af3FqEC6dHstv9POfzyRX14sldgQ&s" alt="Love 2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmczxU_o3L-XpQdXlgllQglD7ReHsZYZCfDA&s" alt="Love 3">
+        </div>
+    </div>
+
+    <script>
+        // 1. Create floating kisses
+        function createKisses() {
+            const container = document.getElementById('kiss-container');
+            const emojis = ['💋', '❤️', '🔥', '😘'];
+            for (let i = 0; i < 15; i++) {
+                let kiss = document.createElement('div');
+                kiss.className = 'kiss';
+                kiss.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                kiss.style.left = Math.random() * 100 + 'vw';
+                kiss.style.animationDelay = Math.random() * 5 + 's';
+                kiss.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                container.appendChild(kiss);
+            }
+        }
+        createKisses();
+
+        // 2. Move "No" button logic
+        function moveNo() {
+            const btn = document.getElementById('noBtn');
+            
+            // Calculate random positions within the visible screen
+            // Subtracting button width/height to keep it inside boundaries
+            const maxWidth = window.innerWidth - btn.offsetWidth - 20;
+            const maxHeight = window.innerHeight - btn.offsetHeight - 20;
+
+            const randomX = Math.floor(Math.random() * maxWidth);
+            const randomY = Math.floor(Math.random() * maxHeight);
+
+            btn.style.position = "fixed";
+            btn.style.left = randomX + "px";
+            btn.style.top = randomY + "px";
+        }
+
+        // 3. Handle "Yes" click
+        function showLove() {
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('success-screen').style.display = 'flex';
+            
+            // Add extra explosion effect
+            for(let i=0; i<20; i++) {
+                setTimeout(createKisses, i * 100);
+            }
+        }
+    </script>
+</body>
+</html>
